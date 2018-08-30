@@ -370,9 +370,9 @@ Public Class Form1
             Throw New System.Exception("Steamapps folder is incorrect. Disable ""override folder detection"", or select a correct folder.")
         End If
 
-        'slam.cfg
-        Using slam_cfg As StreamWriter = New StreamWriter(GameCfgFolder & "slam.cfg")
-            slam_cfg.WriteLine("alias slam_listtracks ""exec slam_tracklist.cfg""")
+        'lam.cfg
+        Using slam_cfg As StreamWriter = New StreamWriter(GameCfgFolder & "lam.cfg")
+            slam_cfg.WriteLine("alias slam_listtracks ""exec lam_tracklist.cfg""")
             slam_cfg.WriteLine("alias list slam_listtracks")
             slam_cfg.WriteLine("alias tracks slam_listtracks")
             slam_cfg.WriteLine("alias la slam_listtracks")
@@ -387,9 +387,9 @@ Public Class Form1
             Else
                 slam_cfg.WriteLine("bind {0} slam_play", My.Settings.PlayKey)
             End If
-            slam_cfg.WriteLine("alias slam_curtrack ""exec slam_curtrack.cfg""")
-            slam_cfg.WriteLine("alias slam_saycurtrack ""exec slam_saycurtrack.cfg""")
-            slam_cfg.WriteLine("alias slam_sayteamcurtrack ""exec slam_sayteamcurtrack.cfg""")
+            slam_cfg.WriteLine("alias slam_curtrack ""exec lam_curtrack.cfg""")
+            slam_cfg.WriteLine("alias slam_saycurtrack ""exec lam_saycurtrack.cfg""")
+            slam_cfg.WriteLine("alias slam_sayteamcurtrack ""exec lam_sayteamcurtrack.cfg""")
 
             For Each Track In Game.tracks
                 Dim index As String = Game.tracks.IndexOf(Track)
@@ -415,8 +415,8 @@ Public Class Form1
 
         End Using
 
-        'slam_tracklist.cfg
-        Using slam_tracklist_cfg As StreamWriter = New StreamWriter(GameCfgFolder & "slam_tracklist.cfg")
+        'lam_tracklist.cfg
+        Using slam_tracklist_cfg As StreamWriter = New StreamWriter(GameCfgFolder & "lam_tracklist.cfg")
             slam_tracklist_cfg.WriteLine("echo ""You can select tracks either by typing a tag, or their track number.""")
             slam_tracklist_cfg.WriteLine("echo ""--------------------Tracks--------------------""")
             For Each Track In Game.tracks
@@ -484,13 +484,13 @@ Public Class Form1
                     End If
 
                     Dim GameCfgFolder As String = Path.Combine(SteamAppsPath, Game.directory, Game.ToCfg)
-                    Using slam_curtrack As StreamWriter = New StreamWriter(GameCfgFolder & "slam_curtrack.cfg")
+                    Using slam_curtrack As StreamWriter = New StreamWriter(GameCfgFolder & "lam_curtrack.cfg")
                         slam_curtrack.WriteLine("echo ""[SLAM] Track name: {0}""", Track.name)
                     End Using
-                    Using slam_saycurtrack As StreamWriter = New StreamWriter(GameCfgFolder & "slam_saycurtrack.cfg")
+                    Using slam_saycurtrack As StreamWriter = New StreamWriter(GameCfgFolder & "lam_saycurtrack.cfg")
                         slam_saycurtrack.WriteLine("say ""[SLAM] Track name: {0}""", Track.name)
                     End Using
-                    Using slam_sayteamcurtrack As StreamWriter = New StreamWriter(GameCfgFolder & "slam_sayteamcurtrack.cfg")
+                    Using slam_sayteamcurtrack As StreamWriter = New StreamWriter(GameCfgFolder & "lam_sayteamcurtrack.cfg")
                         slam_sayteamcurtrack.WriteLine("say_team ""[SLAM] Track name: {0}""", Track.name)
                     End Using
 
@@ -578,7 +578,7 @@ Public Class Form1
         Do While Not PollRelayWorker.CancellationPending
             Try
                 Dim GameFolder As String = Path.Combine(SteamAppsPath, Game.directory)
-                Dim GameCfg As String = Path.Combine(GameFolder, Game.ToCfg) & "slam_relay.cfg"
+                Dim GameCfg As String = Path.Combine(GameFolder, Game.ToCfg) & "lam_relay.cfg"
 
                 If Not Game.id = 0 Then
                     GameCfg = UserDataCFG(Game, UserDataPath)
@@ -622,7 +622,7 @@ Public Class Form1
     Public Function UserDataCFG(Game As SourceGame, UserdataPath As String) As String
         If IO.Directory.Exists(UserdataPath) Then
             For Each userdir As String In System.IO.Directory.GetDirectories(UserdataPath)
-                Dim CFGPath As String = Path.Combine(userdir, Game.id.ToString) & "\local\cfg\slam_relay.cfg"
+                Dim CFGPath As String = Path.Combine(userdir, Game.id.ToString) & "\local\cfg\lam_relay.cfg"
                 If File.Exists(CFGPath) Then
                     Return CFGPath
                 End If
@@ -1047,7 +1047,7 @@ Public Class Form1
     Private Sub DeleteCFGs(ByVal Game As SourceGame, ByVal SteamappsPath As String)
         Dim GameDir As String = Path.Combine(SteamappsPath, Game.directory)
         Dim GameCfgFolder As String = Path.Combine(GameDir, Game.ToCfg)
-        Dim SlamFiles() As String = {"slam.cfg", "slam_tracklist.cfg", "slam_relay.cfg", "slam_curtrack.cfg", "slam_saycurtrack.cfg", "slam_sayteamcurtrack.cfg"}
+        Dim SlamFiles() As String = {"lam.cfg", "lam_tracklist.cfg", "lam_relay.cfg", "lam_curtrack.cfg", "lam_saycurtrack.cfg", "lam_sayteamcurtrack.cfg"}
         Dim voicefile As String = Path.Combine(SteamappsPath, Game.directory) & "voice_input.wav"
 
 
